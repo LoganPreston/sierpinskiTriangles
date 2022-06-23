@@ -53,7 +53,8 @@ def main():
         listYVals = XYPoints[1]
         maxXVal = max(listXVals)
         maxYVal = max(listYVals)
-    
+        #note - tried to convert this to numpy but didn't see much perf
+        # change, so I pulled that out
         xColors = [color / maxXVal for color in listXVals]
         yColors = [color / maxYVal for color in listYVals]
         zeroColors = [max(0,1-xColor-yColor) for xColor,yColor in \
