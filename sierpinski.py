@@ -9,9 +9,12 @@ def main():
             help='how many points do you want')
     parser.add_argument('--showTime', action='store_true',\
             help='show the time it takes to perform steps')
+    parser.add_argument('--funColor', action='store_true',\
+            help='show the plot with a fun (non-configurable) color scheme')
     args = parser.parse_args()
     numPts = args.numPts
     showTime = args.showTime
+    funColor = args.funColor
 
     #border points are key for randidx
     points = [(0,0),(7.5,13),(15,0)]
@@ -35,21 +38,25 @@ def main():
         points.append(lastPt)
         lenPoints += 1
 
-    if(showTime):
+    if showTime:
         print("time to get pts: ", time.time() - start)
     
     start = time.time()
-    listXVals = list(zip(*points))[0]
-    listYVals = list(zip(*points))[1]
-    maxXVal = max(listXVals)
-    maxYVal = max(listYVals)
+    colors = 'blue'
+    if funColor:
+        listXVals = list(zip(*points))[0]
+        listYVals = list(zip(*points))[1]
+        maxXVal = max(listXVals)
+        maxYVal = max(listYVals)
     
-    xColors = [color / maxXVal for color in listXVals]
-    yColors = [color / maxYVal for color in listYVals]
-    zeroColors = [max(0,1-xColor-yColor) for xColor,yColor in zip(xColors, yColors)] 
-    colors = list(zip(yColors, zeroColors, xColors))
+        xColors = [color / maxXVal for color in listXVals]
+        yColors = [color / maxYVal for color in listYVals]
+        zeroColors = [max(0,1-xColor-yColor) for xColor,yColor in \
+                zip(xColors, yColors)] 
+        colors = list(zip(yColors, zeroColors, xColors))
+    
     plt.scatter(*zip(*points), s = 1, c = colors)
-    if(showTime):
+    if showTime:
         print("time to plot: ", time.time() - start)
     
     plt.show()
