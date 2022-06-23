@@ -39,7 +39,16 @@ def main():
         print("time to get pts: ", time.time() - start)
     
     start = time.time()
-    plt.scatter(*zip(*points), s = 1, c = 'blue')
+    listXVals = list(zip(*points))[0]
+    listYVals = list(zip(*points))[1]
+    maxXVal = max(listXVals)
+    maxYVal = max(listYVals)
+    
+    xColors = [color / maxXVal for color in listXVals]
+    yColors = [color / maxYVal for color in listYVals]
+    zeroColors = [max(0,1-xColor-yColor) for xColor,yColor in zip(xColors, yColors)] 
+    colors = list(zip(yColors, zeroColors, xColors))
+    plt.scatter(*zip(*points), s = 1, c = colors)
     if(showTime):
         print("time to plot: ", time.time() - start)
     
