@@ -43,9 +43,14 @@ def main():
     
     start = time.time()
     colors = 'blue'
+    #base the colors on pixel location. 
+    #   more right = more blue
+    #   more up = more red
+    #   made lower left very green. Green fades as point moves right or up
     if funColor:
-        listXVals = list(zip(*points))[0]
-        listYVals = list(zip(*points))[1]
+        XYPoints = list(zip(*points))
+        listXVals = XYPoints[0]
+        listYVals = XYPoints[1]
         maxXVal = max(listXVals)
         maxYVal = max(listYVals)
     
